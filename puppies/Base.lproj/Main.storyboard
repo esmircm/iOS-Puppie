@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EbP-Yj-wtz">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Split View Controller-->
+        <scene sceneID="ve4-u1-jNz">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wg4-KB-UtX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <splitViewController id="EbP-Yj-wtz" sceneMemberID="viewController">
+                    <connections>
+                        <segue destination="zyd-tc-wZV" kind="relationship" relationship="masterViewController" id="1NG-mt-wZd"/>
+                    </connections>
+                </splitViewController>
+            </objects>
+            <point key="canvasLocation" x="-2799" y="385"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fJ3-i9-erC">
+            <objects>
+                <navigationController id="zyd-tc-wZV" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="x9p-EA-iQP">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="MuK-rK-srE" kind="relationship" relationship="rootViewController" id="LGf-dc-hLT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xzL-Az-SnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2044" y="385"/>
+        </scene>
+        <!--List Puppies View Controller-->
+        <scene sceneID="IjV-Ea-NKq">
+            <objects>
+                <viewController id="MuK-rK-srE" customClass="ListPuppiesViewController" customModule="puppies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dSs-nd-pq5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="klu-OD-TQg">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vZY-i6-nJ4">
+                                    <size key="itemSize" width="371" height="230"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="rtI-WQ-CaF" customClass="ListPuppiesCollectionViewCell" customModule="puppies" customModuleProvider="target">
+                                        <rect key="frame" x="2" y="0.0" width="371" height="230"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="371" height="230"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vfo-jU-PEo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="371" height="230"/>
+                                                    <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UkS-8I-5IP">
+                                                    <rect key="frame" x="133" y="88" width="105.5" height="54"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="vfo-jU-PEo" secondAttribute="trailing" id="Dix-y5-FdF"/>
+                                            <constraint firstItem="UkS-8I-5IP" firstAttribute="centerY" secondItem="rtI-WQ-CaF" secondAttribute="centerY" id="FdV-I8-HFI"/>
+                                            <constraint firstItem="UkS-8I-5IP" firstAttribute="centerX" secondItem="rtI-WQ-CaF" secondAttribute="centerX" id="d1P-dV-ibx"/>
+                                            <constraint firstAttribute="bottom" secondItem="vfo-jU-PEo" secondAttribute="bottom" id="dbL-Fh-8aW"/>
+                                            <constraint firstItem="vfo-jU-PEo" firstAttribute="leading" secondItem="rtI-WQ-CaF" secondAttribute="leading" id="fFd-Q7-MfW"/>
+                                            <constraint firstItem="vfo-jU-PEo" firstAttribute="top" secondItem="rtI-WQ-CaF" secondAttribute="top" id="pxf-N5-pwp"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imagePuppie" destination="vfo-jU-PEo" id="bv9-k0-hpU"/>
+                                            <outlet property="labelPuppie" destination="UkS-8I-5IP" id="z0o-mG-fah"/>
+                                            <segue destination="E2k-hl-Bks" kind="showDetail" identifier="ShowPuppiesList" id="1Sz-9u-Lo0"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="klu-OD-TQg" firstAttribute="bottom" secondItem="Ra6-kF-K9j" secondAttribute="bottom" id="GSi-H8-gpB"/>
+                            <constraint firstItem="klu-OD-TQg" firstAttribute="trailing" secondItem="Ra6-kF-K9j" secondAttribute="trailing" id="oL6-0v-YtB"/>
+                            <constraint firstItem="klu-OD-TQg" firstAttribute="leading" secondItem="Ra6-kF-K9j" secondAttribute="leading" id="sS5-sd-9CL"/>
+                            <constraint firstItem="klu-OD-TQg" firstAttribute="top" secondItem="Ra6-kF-K9j" secondAttribute="top" id="wHn-du-6Kr"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ra6-kF-K9j"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="kt8-rr-Rkh"/>
+                    <connections>
+                        <outlet property="PuppiesCollectionView" destination="klu-OD-TQg" id="Dyh-xK-NWe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iNF-Bq-2vA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1308" y="388"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="FKX-lv-cNE">
+            <objects>
+                <navigationController id="E2k-hl-Bks" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="tvg-f6-IX5">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="VVa-S7-kxm" kind="relationship" relationship="rootViewController" id="mH9-WC-gz0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fzx-4e-Cif" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-564" y="387"/>
+        </scene>
+        <!--Puppies-->
+        <scene sceneID="SS7-6L-iQO">
+            <objects>
+                <viewController id="VVa-S7-kxm" customClass="DetailListPuppiesViewController" customModule="puppies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vQS-vH-hjW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cxh-aW-eg2">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="nvj-L8-VTq">
+                                    <size key="itemSize" width="143" height="127"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellPuppies" id="HqJ-JU-Dc8">
+                                        <rect key="frame" x="0.0" y="0.0" width="143" height="127"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="143" height="127"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="cxh-aW-eg2" firstAttribute="trailing" secondItem="sBI-9V-Ij6" secondAttribute="trailing" id="R4c-vP-70H"/>
+                            <constraint firstItem="cxh-aW-eg2" firstAttribute="bottom" secondItem="sBI-9V-Ij6" secondAttribute="bottom" id="fDt-ba-IAz"/>
+                            <constraint firstItem="cxh-aW-eg2" firstAttribute="top" secondItem="sBI-9V-Ij6" secondAttribute="top" id="weA-GL-mta"/>
+                            <constraint firstItem="cxh-aW-eg2" firstAttribute="leading" secondItem="sBI-9V-Ij6" secondAttribute="leading" id="yJK-ZJ-UcL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sBI-9V-Ij6"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Puppies" id="eHP-us-sBc">
+                        <barButtonItem key="backBarButtonItem" title="back" id="Ns8-PZ-NMm"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="ListPuppiesCollectionView" destination="cxh-aW-eg2" id="XuY-Pn-j9c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vmy-Mz-UEz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="130" y="387"/>
+        </scene>
+    </scenes>
+</document>
