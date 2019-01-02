@@ -45,11 +45,8 @@ class ListPuppiesViewController: UIViewController, UICollectionViewDelegateFlowL
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        print("entro en prepare")
-        
         if segue.identifier == "ShowPuppiesList"
         {
-            print("entro en segue")
             
             let controller = (segue.destination as! UINavigationController).topViewController as! DetailListPuppiesViewController
             controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem

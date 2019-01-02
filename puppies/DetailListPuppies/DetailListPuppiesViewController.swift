@@ -26,12 +26,20 @@ class DetailListPuppiesViewController: UIViewController, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellPuppies", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellPuppies", for: indexPath) as! DetailListPuppiesCollectionViewCell
         
         cell.layer.cornerRadius = 10
-        cell.backgroundColor = UIColor.red
+        cell.imagePuppies.image = UIImage(named: "1")
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 110, height: 110)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
 
