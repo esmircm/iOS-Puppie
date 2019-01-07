@@ -84,7 +84,7 @@
             </objects>
             <point key="canvasLocation" x="-1857" y="384"/>
         </scene>
-        <!--List Puppies View Controller-->
+        <!--Puppies-->
         <scene sceneID="IjV-Ea-NKq">
             <objects>
                 <viewController id="MuK-rK-srE" customClass="ListPuppiesViewController" customModule="puppies" customModuleProvider="target" sceneMemberID="viewController">
@@ -95,7 +95,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="klu-OD-TQg">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vZY-i6-nJ4">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vZY-i6-nJ4">
                                     <size key="itemSize" width="371" height="230"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -103,21 +103,21 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="rtI-WQ-CaF" customClass="ListPuppiesCollectionViewCell" customModule="puppies" customModuleProvider="target">
-                                        <rect key="frame" x="2" y="0.0" width="371" height="230"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="371" height="230"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="371" height="230"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vfo-jU-PEo">
-                                                    <rect key="frame" x="0.0" y="0.0" width="371" height="230"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vfo-jU-PEo" customClass="PuppiesAsyncImage" customModule="puppies" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="1" width="371" height="230"/>
                                                     <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UkS-8I-5IP">
-                                                    <rect key="frame" x="133" y="88" width="105.5" height="54"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="45"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <rect key="frame" x="130.5" y="86.5" width="110" height="57.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="47"/>
                                                     <nil key="highlightedColor"/>
+                                                    <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </label>
                                             </subviews>
                                         </view>
@@ -147,7 +147,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ra6-kF-K9j"/>
                     </view>
-                    <navigationItem key="navigationItem" id="kt8-rr-Rkh"/>
+                    <navigationItem key="navigationItem" title="Puppies" id="kt8-rr-Rkh"/>
                     <connections>
                         <outlet property="PuppiesCollectionView" destination="klu-OD-TQg" id="Dyh-xK-NWe"/>
                     </connections>
@@ -172,7 +172,7 @@
             </objects>
             <point key="canvasLocation" x="375.19999999999999" y="386.35682158920542"/>
         </scene>
-        <!--Puppies-->
+        <!--Detail List Puppies View Controller-->
         <scene sceneID="SS7-6L-iQO">
             <objects>
                 <viewController id="VVa-S7-kxm" customClass="DetailListPuppiesViewController" customModule="puppies" customModuleProvider="target" sceneMemberID="viewController">
@@ -197,7 +197,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="373" height="221"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aaI-L4-kPX">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aaI-L4-kPX" customClass="PuppiesAsyncImage" customModule="puppies" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="373" height="221"/>
                                                 </imageView>
                                             </subviews>
@@ -225,9 +225,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sBI-9V-Ij6"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Puppies" id="eHP-us-sBc">
-                        <barButtonItem key="backBarButtonItem" title="back" id="Ns8-PZ-NMm"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="eHP-us-sBc"/>
                     <connections>
                         <outlet property="ListPuppiesCollectionView" destination="cxh-aW-eg2" id="XuY-Pn-j9c"/>
                     </connections>
@@ -260,7 +258,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7r0-Cz-CQ0">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7r0-Cz-CQ0" customClass="PuppiesAsyncImage" customModule="puppies" customModuleProvider="target">
                                 <rect key="frame" x="31" y="94" width="312" height="273"/>
                             </imageView>
                         </subviews>
