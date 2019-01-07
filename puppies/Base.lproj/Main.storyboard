@@ -37,7 +37,7 @@
             </objects>
             <point key="canvasLocation" x="-2044" y="385"/>
         </scene>
-        <!--List Puppies View Controller-->
+        <!--Puppies-->
         <scene sceneID="IjV-Ea-NKq">
             <objects>
                 <viewController id="MuK-rK-srE" customClass="ListPuppiesViewController" customModule="puppies" customModuleProvider="target" sceneMemberID="viewController">
@@ -100,7 +100,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ra6-kF-K9j"/>
                     </view>
-                    <navigationItem key="navigationItem" id="kt8-rr-Rkh"/>
+                    <navigationItem key="navigationItem" title="Puppies" id="kt8-rr-Rkh"/>
                     <connections>
                         <outlet property="PuppiesCollectionView" destination="klu-OD-TQg" id="Dyh-xK-NWe"/>
                     </connections>
@@ -125,7 +125,7 @@
             </objects>
             <point key="canvasLocation" x="-564" y="387"/>
         </scene>
-        <!--Puppies-->
+        <!--Detail List Puppies View Controller-->
         <scene sceneID="SS7-6L-iQO">
             <objects>
                 <viewController id="VVa-S7-kxm" customClass="DetailListPuppiesViewController" customModule="puppies" customModuleProvider="target" sceneMemberID="viewController">
@@ -178,9 +178,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sBI-9V-Ij6"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Puppies" id="eHP-us-sBc">
-                        <barButtonItem key="backBarButtonItem" title="back" id="Ns8-PZ-NMm"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="eHP-us-sBc"/>
                     <connections>
                         <outlet property="ListPuppiesCollectionView" destination="cxh-aW-eg2" id="XuY-Pn-j9c"/>
                     </connections>

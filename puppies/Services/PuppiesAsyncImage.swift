@@ -22,20 +22,21 @@ class PuppiesAsyncImage: UIImageView {
                 
                 let subJson = json["message"] as! String
                 
-                let urlImage = URL(string: subJson)!
+                if let urlImage = URL(string: subJson) {
                 
-                DispatchQueue.global().async {
-                    if let data = try? Data(contentsOf: urlImage) {
-                        if let image = UIImage(data: data) {
-                            
-                            DispatchQueue.main.async {
+                    DispatchQueue.global().async {
+                        if let data = try? Data(contentsOf: urlImage) {
+                            if let image = UIImage(data: data) {
                                 
-                                let resizeImage = self.resizeImage(image: image, newWidth: 500)
-                                
-                                self.image = resizeImage
-   
-                            }
+                                DispatchQueue.main.async {
+                                    
+                                    let resizeImage = self.resizeImage(image: image, newWidth: 500)
+                                    
+                                    self.image = resizeImage
+       
+                                }
 
+                            }
                         }
                     }
                 }
