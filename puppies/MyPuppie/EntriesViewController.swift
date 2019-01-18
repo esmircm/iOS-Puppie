@@ -11,37 +11,44 @@ import CoreData
 class EntriesViewController: UITableViewController {
     
     var entries: [Entry] = []
+    var entryEntities: [EntryEntity] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        entries = getEntries()
+        getEntries()
     }
     
-    func getEntries() -> [Entry]{
+    func getEntries(){
         // fetchData
-        var entriesData: [NSManagedObject] = []
-        var entries: [Entry] = []
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "EntryEntity")
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(request)
-            entriesData = result as! [NSManagedObject]
-        } catch {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "EntryEntity")
+        let privateManagedObjectContext = getPersistentContainer().viewContext
+        let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { [weak self ] asynchronousFetchResult in
             
-            print("Failed")
+            guard let entriesData = asynchronousFetchResult.finalResult as? [EntryEntity] else { return }
+            self?.entryEntities = entriesData
+            
+            // Dispatches to use the data in the main queue
+            DispatchQueue.main.async { [weak self] in
+                for entryData in entriesData {
+                    let date = entryData.value(forKeyPath: "date") as? String
+                    let photoString = entryData.value(forKeyPath: "photo") as? String
+                    let moodControl = entryData.value(forKeyPath: "mood") as? Int ?? 0
+                    self?.entries.append(Entry(date: date!, photo: photoString!, mood: moodControl)!)
+                    self?.tableView.reloadData()
+                }
+            }
         }
         
-        for entryData in entriesData {
-            let id = entryData.value(forKeyPath: "id") as? String
-            let date = entryData.value(forKeyPath: "date") as? String
-            let photoString = entryData.value(forKeyPath: "photo") as? String
-            let moodControl = entryData.value(forKeyPath: "mood") as? Int ?? 0
-            entries.append(Entry(id: id!, date: date!, photo: photoString!, mood: moodControl)!)
+        do {
+            try privateManagedObjectContext.execute(asynchronousFetchRequest)
+        } catch let error {
+            print("NSAsynchronousFetchRequest error: \(error)")
         }
-        
-        return entries
+    }
+    
+    func getPersistentContainer() -> NSPersistentContainer {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -54,29 +61,20 @@ class EntriesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-    
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            let entry = entries[indexPath.row]
-            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "EntryEntity")
-            fetchRequest.predicate = NSPredicate(format: "id = %@", entry.id)
-            do {
-                let entriesData = try context.fetch(fetchRequest)
+            let context = getPersistentContainer().viewContext
+            let entryToDelete: EntryEntity = entryEntities[indexPath.row]
+            getPersistentContainer().performBackgroundTask { _ in
                 
-                let entryDelete = entriesData [0] as! NSManagedObject
-                context.delete(entryDelete)
-                
-            } catch {
-                print("Error")
-            }
-            
-            do {
-                try context.save()
-            } catch {
-                print("Failed saving")
+                do {
+                    context.delete(entryToDelete)
+                    try context.save()
+                } catch {
+                    fatalError("Failure to save context: \(error)")
+                }
             }
             
             entries.remove(at: indexPath.row)
+            entryEntities.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -91,17 +89,20 @@ class EntriesViewController: UITableViewController {
         cell.dateLabel.text = entry.date
         
         if let photoString = entry.photo {
-            let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
-            let nsUserDomainMask    = FileManager.SearchPathDomainMask.userDomainMask
-            let paths               = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
-            if let dirPath          = paths.first {
-                let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(photoString)
-                cell.photoImageView.image = UIImage(contentsOfFile: imageURL.path)
-            } else {
-                cell.photoImageView.image = UIImage(named: "orange_paw")
+            DispatchQueue.global(qos: .background).async {
+                let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
+                let nsUserDomainMask    = FileManager.SearchPathDomainMask.userDomainMask
+                let paths               = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
+                if let dirPath          = paths.first {
+                    
+                    let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(photoString)
+                    let image  = UIImage(contentsOfFile: imageURL.path) 
+                    
+                    DispatchQueue.main.async {
+                        cell.photoImageView.image = image
+                    }
+                }
             }
-        } else {
-            cell.photoImageView.image = UIImage(named: "orange_paw")
         }
         cell.moodControl.mood = entry.mood
         
@@ -111,48 +112,50 @@ class EntriesViewController: UITableViewController {
     @IBAction func unwindToEntryList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? DailyEntryViewController, let entry = sourceViewController.entry {
             
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context = appDelegate.persistentContainer.viewContext
-            let entity = NSEntityDescription.entity(forEntityName: "EntryEntity", in: context)
             
+            let context = getPersistentContainer().viewContext
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                let entryToUpdate = entryEntities[selectedIndexPath.row]
+                
+                getPersistentContainer().performBackgroundTask { _ in
+                    
+                    guard let entryToUpdateEntity = context.object(with: entryToUpdate.objectID) as? EntryEntity else { return }
+                    
+                    entryToUpdateEntity.date = entry.date
+                    entryToUpdateEntity.mood = Int16(entry.mood)
+                    entryToUpdateEntity.photo = entry.photo
+                    
+                    do {
+                        try context.save()
+                    } catch {
+                        fatalError("Failure to save context: \(error)")
+                    }
+                }
                 
                 entries[selectedIndexPath.row] = entry
-                
-                let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "EntryEntity")
-                fetchRequest.predicate = NSPredicate(format: "id = %@", entry.id)
-                do {
-                    let entriesData = try context.fetch(fetchRequest)
-                    
-                    let entryUpdate = entriesData [0] as! NSManagedObject
-                    entryUpdate.setValue(entry.date, forKey: "date")
-                    entryUpdate.setValue(entry.mood, forKey: "mood")
-                    entryUpdate.setValue(entry.photo, forKey: "photo")
-                    
-                } catch {
-                    print("Error")
-                }
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
             }
             else {
                 
-                // add Entry
-                let newEntry = NSManagedObject(entity: entity!, insertInto: context)
-                newEntry.setValue(entry.id, forKey: "id")
+                let newEntry = EntryEntity(context: context)
                 newEntry.setValue(entry.date, forKey: "date")
                 newEntry.setValue(entry.mood, forKey: "mood")
                 newEntry.setValue(entry.photo, forKey: "photo")
                 
+                getPersistentContainer().performBackgroundTask { _ in
+                    
+                    do {
+                        // Saves the entries created in the `forEach`
+                        try context.save()
+                    } catch {
+                        fatalError("Failure to save context: \(error)")
+                    }
+                }
                 let newIndexPath = IndexPath(row: entries.count, section: 0)
                 entries.append(entry)
+                entryEntities.append(newEntry)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
                 tableView.reloadData()
-            }
-            
-            do {
-                try context.save()
-            } catch {
-                print("Failed saving")
             }
         }
     }

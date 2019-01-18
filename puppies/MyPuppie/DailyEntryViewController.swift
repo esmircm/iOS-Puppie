@@ -10,7 +10,7 @@ import UIKit
 import os.log
 
 class DailyEntryViewController: UIViewController, UIImagePickerControllerDelegate,
-UINavigationControllerDelegate{
+UINavigationControllerDelegate {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     var entry: Entry?
@@ -25,6 +25,16 @@ UINavigationControllerDelegate{
         
         if let entry = entry {
             navigationItem.title = entry.date
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = DateFormatter.Style.short
+            
+            let date = dateFormatter.date(from: entry.date)
+            
+            if date != nil{
+                datePicker.setDate(date!, animated: true)
+            }
+            
             if let photoString = entry.photo {
                 let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
                 let nsUserDomainMask    = FileManager.SearchPathDomainMask.userDomainMask
@@ -34,9 +44,6 @@ UINavigationControllerDelegate{
                     if editingImageUrl != nil{
                         photoImageView.image = UIImage(contentsOfFile: editingImageUrl!.path)
                     }
-                }
-                else {
-                    photoImageView.image = UIImage(named: "orange_paw")
                 }
             }
             moodControl.mood = entry.mood
@@ -75,32 +82,30 @@ UINavigationControllerDelegate{
         
         if imageUrl != nil && imageUrl != editingImageUrl {
             photo = imageUrl!.lastPathComponent
-            saveImage(photo: photo)
+            if let data = photoImageView.image!.jpegData(compressionQuality: 1.0){
+                DispatchQueue.global(qos: .background).async { [weak self] in
+                    self?.saveImage(data: data, path: photo)
+                }
+            }
         } else {
             photo = editingImageUrl?.lastPathComponent ??  ""
         }
         
         let mood = moodControl.mood
-        var id = ""
         
-        if let entry = entry {
-            id = entry.id
-        } else {
-            id = UUID().uuidString
-        }
-        entry = Entry(id: id, date: date, photo: photo, mood: mood)
+        entry = Entry(date: date, photo: photo, mood: mood)
         
     }
     
-    func saveImage(photo: String){
+    func saveImage(data: Data, path: String){
         let documentsDirectoryURL = try! FileManager().url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-       
-        let fileURL = documentsDirectoryURL.appendingPathComponent(photo)
+        
+        let fileURL = documentsDirectoryURL.appendingPathComponent(path)
         
         
         if !FileManager.default.fileExists(atPath: fileURL.path) {
             do {
-                try photoImageView.image!.jpegData(compressionQuality: 1.0)!.write(to: fileURL)
+                try data.write(to: fileURL)
                 print("Image Added Successfully")
             } catch {
                 print(error)
