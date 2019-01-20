@@ -333,7 +333,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="BNT-4S-oKn" customClass="MoodControl" customModule="puppies">
-                                            <rect key="frame" x="135" y="97" width="230" height="44"/>
+                                            <rect key="frame" x="141" y="97" width="224" height="44"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="editable" value="NO"/>
                                             </userDefinedRuntimeAttributes>
@@ -341,6 +341,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="XCa-Ou-XiI" firstAttribute="leading" secondItem="ZsG-gO-fbk" secondAttribute="trailing" constant="11" id="3FJ-bt-YyK"/>
+                                        <constraint firstItem="BNT-4S-oKn" firstAttribute="leading" secondItem="ZsG-gO-fbk" secondAttribute="trailing" constant="2" id="6OR-KJ-vic"/>
                                         <constraint firstItem="ZsG-gO-fbk" firstAttribute="top" secondItem="wKv-PL-ApB" secondAttribute="topMargin" constant="-3" id="BEW-Dn-3Sx"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="BNT-4S-oKn" secondAttribute="trailing" constant="-6" id="BWY-4g-50C"/>
                                         <constraint firstItem="ZsG-gO-fbk" firstAttribute="leading" secondItem="wKv-PL-ApB" secondAttribute="leadingMargin" constant="-7" id="IpZ-nU-brm"/>
