@@ -8,74 +8,31 @@
 import UIKit
 import CoreData
 
-class EntriesViewController: UITableViewController {
-    
-    var entries: [Entry] = []
-    var entryEntities: [EntryEntity] = []
+class EntriesViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+    var managedObjectContext: NSManagedObjectContext? = nil
+    var puppiesImageHelper: PuppieImageHelper?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getEntries()
-    }
-    
-    func getEntries(){
-        // fetchData
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "EntryEntity")
-        let privateManagedObjectContext = getPersistentContainer().viewContext
-        let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { [weak self ] asynchronousFetchResult in
-            
-            guard let entriesData = asynchronousFetchResult.finalResult as? [EntryEntity] else { return }
-            self?.entryEntities = entriesData
-            
-            // Dispatches to use the data in the main queue
-            DispatchQueue.main.async { [weak self] in
-                for entryData in entriesData {
-                    let date = entryData.value(forKeyPath: "date") as? String
-                    let photoString = entryData.value(forKeyPath: "photo") as? String
-                    let moodControl = entryData.value(forKeyPath: "mood") as? Int ?? 0
-                    self?.entries.append(Entry(date: date!, photo: photoString!, mood: moodControl)!)
-                    self?.tableView.reloadData()
-                }
-            }
-        }
-        
-        do {
-            try privateManagedObjectContext.execute(asynchronousFetchRequest)
-        } catch let error {
-            print("NSAsynchronousFetchRequest error: \(error)")
-        }
-    }
-    
-    func getPersistentContainer() -> NSPersistentContainer {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistentContainer
+        managedObjectContext = appDelegate.persistentContainer.viewContext
+        puppiesImageHelper = PuppieImageHelper()
     }
+    
+    // Table view
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return fetchedResultsController.sections?.count ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return entries.count
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let context = getPersistentContainer().viewContext
-            let entryToDelete: EntryEntity = entryEntities[indexPath.row]
-            getPersistentContainer().performBackgroundTask { _ in
-                
-                do {
-                    context.delete(entryToDelete)
-                    try context.save()
-                } catch {
-                    fatalError("Failure to save context: \(error)")
-                }
-            }
-            
-            entries.remove(at: indexPath.row)
-            entryEntities.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let entryToDelete = fetchedResultsController.object(at: indexPath)
+            fetchedResultsController.managedObjectContext.delete(entryToDelete)
         }
     }
     
@@ -85,77 +42,56 @@ class EntriesViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of EntryTableViewCell.")
         }
         
-        let entry = entries[indexPath.row]
-        cell.dateLabel.text = entry.date
-        
-        if let photoString = entry.photo {
-            DispatchQueue.global(qos: .background).async {
-                let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
-                let nsUserDomainMask    = FileManager.SearchPathDomainMask.userDomainMask
-                let paths               = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
-                if let dirPath          = paths.first {
-                    
-                    let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(photoString)
-                    let image  = UIImage(contentsOfFile: imageURL.path) 
-                    
-                    DispatchQueue.main.async {
-                        cell.photoImageView.image = image
-                    }
-                }
-            }
-        }
-        cell.moodControl.mood = entry.mood
+        configureCell(cell, at: indexPath)
         
         return cell
     }
     
-    @IBAction func unwindToEntryList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? DailyEntryViewController, let entry = sourceViewController.entry {
-            
-            
-            let context = getPersistentContainer().viewContext
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                let entryToUpdate = entryEntities[selectedIndexPath.row]
-                
-                getPersistentContainer().performBackgroundTask { _ in
-                    
-                    guard let entryToUpdateEntity = context.object(with: entryToUpdate.objectID) as? EntryEntity else { return }
-                    
-                    entryToUpdateEntity.date = entry.date
-                    entryToUpdateEntity.mood = Int16(entry.mood)
-                    entryToUpdateEntity.photo = entry.photo
-                    
-                    do {
-                        try context.save()
-                    } catch {
-                        fatalError("Failure to save context: \(error)")
-                    }
-                }
-                
-                entries[selectedIndexPath.row] = entry
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionInfo = fetchedResultsController.sections![section]
+        return sectionInfo.numberOfObjects
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func configureCell(_ cell: EntryTableViewCell, at indexPath: IndexPath) {
+        
+        let entry = fetchedResultsController.object(at: indexPath)
+        
+        
+        cell.dateLabel.text = entry.date
+        
+        let photoString = entry.value(forKey: "photo") as? String
+        
+        cell.photoImageView.image = UIImage(named: "puppie_placeholder")
+        
+        if photoString != "puppie_placeholder" {
+            DispatchQueue.main.async { [weak self] in
+                self?.puppiesImageHelper?.loadImage(imagePath: photoString!, completion: {(image) in
+                    cell.photoImageView.image = image
+                })
             }
-            else {
-                
-                let newEntry = EntryEntity(context: context)
-                newEntry.setValue(entry.date, forKey: "date")
-                newEntry.setValue(entry.mood, forKey: "mood")
-                newEntry.setValue(entry.photo, forKey: "photo")
-                
-                getPersistentContainer().performBackgroundTask { _ in
-                    
-                    do {
-                        // Saves the entries created in the `forEach`
-                        try context.save()
-                    } catch {
-                        fatalError("Failure to save context: \(error)")
+        }
+        let mood = entry.value(forKey: "mood") as? Int16
+        cell.moodControl.mood = Int(mood!)
+    }
+    
+    @IBAction func unwindToEntryList(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? DailyEntryViewController{
+            let date = sourceViewController.date
+            let photo = sourceViewController.photo
+            let mood = sourceViewController.mood
+            let entryId = sourceViewController.entryId
+            
+            if let context = managedObjectContext {
+                let entityDataManager = EntityDataManager(context: context)
+                entityDataManager.updateEntryList(id: entryId!, date: date!, photo: photo!, mood: mood!, completion: { [weak self] in
+                    DispatchQueue.main.async {
+                        try? self?.managedObjectContext!.save()
                     }
-                }
-                let newIndexPath = IndexPath(row: entries.count, section: 0)
-                entries.append(entry)
-                entryEntities.append(newEntry)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-                tableView.reloadData()
+                })
             }
         }
     }
@@ -178,9 +114,8 @@ class EntriesViewController: UITableViewController {
                 fatalError("The selected cell is not being displayed by the table")
             }
             
-            let selectedEntry = entries[indexPath.row]
-            
-            entryDetailViewController.entry = selectedEntry
+            let entry = fetchedResultsController.object(at: indexPath)
+            entryDetailViewController.entry = entry
             
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
@@ -188,4 +123,61 @@ class EntriesViewController: UITableViewController {
     }
     
     
+    // MARK: - Fetched results controller
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<EntryEntity>! = {
+        
+        let fetchRequest: NSFetchRequest<EntryEntity> = EntryEntity.fetchRequest()
+        
+        // Set the batch size to a suitable number.
+        fetchRequest.fetchBatchSize = 20
+        
+        // Edit the sort key as appropriate.
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        // Edit the section name key path and cache name if appropriate.
+        // nil for section name key path means "no sections".
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
+        
+        aFetchedResultsController.delegate = self
+        
+        do {
+            try aFetchedResultsController.performFetch()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        return aFetchedResultsController
+    }()
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .fade)
+            }
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            if let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) {
+                configureCell(cell as! EntryTableViewCell, at: indexPath)
+            }
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+        }
+    }
 }
+
