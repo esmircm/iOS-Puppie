@@ -12,6 +12,8 @@
 		6414C6C921E02F3100BCA343 /* PuppiesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6414C6C821E02F3100BCA343 /* PuppiesService.swift */; };
 		6414C6CB21E0DC6E00BCA343 /* PuppiesAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6414C6CA21E0DC6E00BCA343 /* PuppiesAsyncImage.swift */; };
 		6414C6D221E2A3B300BCA343 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6414C6D121E2A3B300BCA343 /* ImageCache.swift */; };
+		6467BE5921F669230007ECD0 /* EntityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467BE5821F669230007ECD0 /* EntityDataManager.swift */; };
+		6467BE5B21F669300007ECD0 /* PuppieImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467BE5A21F669300007ECD0 /* PuppieImageHelper.swift */; };
 		7EC36C0721DF8E43006C261C /* Puppies.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7EC36C0521DF8E43006C261C /* Puppies.xcdatamodeld */; };
 		7EC36C0921DF9007006C261C /* PuppiesMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC36C0821DF9007006C261C /* PuppiesMainViewController.swift */; };
 		7EC36C0C21DFAC15006C261C /* MoodControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC36C0B21DFAC15006C261C /* MoodControl.swift */; };
@@ -34,6 +36,8 @@
 		6414C6C821E02F3100BCA343 /* PuppiesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuppiesService.swift; sourceTree = "<group>"; };
 		6414C6CA21E0DC6E00BCA343 /* PuppiesAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuppiesAsyncImage.swift; sourceTree = "<group>"; };
 		6414C6D121E2A3B300BCA343 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		6467BE5821F669230007ECD0 /* EntityDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityDataManager.swift; sourceTree = "<group>"; };
+		6467BE5A21F669300007ECD0 /* PuppieImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuppieImageHelper.swift; sourceTree = "<group>"; };
 		7EC36C0621DF8E43006C261C /* EntryEntity.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EntryEntity.xcdatamodel; sourceTree = "<group>"; };
 		7EC36C0821DF9007006C261C /* PuppiesMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuppiesMainViewController.swift; sourceTree = "<group>"; };
 		7EC36C0B21DFAC15006C261C /* MoodControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodControl.swift; sourceTree = "<group>"; };
@@ -101,13 +105,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		6414C6D021E1685600BCA343 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		6414C6D321E2A6E100BCA343 /* ImagePuppie */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +119,8 @@
 				7EC36C0B21DFAC15006C261C /* MoodControl.swift */,
 				7EC36C0F21DFAD02006C261C /* EntriesViewController.swift */,
 				7EC36C1121DFB042006C261C /* DailyEntryViewController.swift */,
+				6467BE5821F669230007ECD0 /* EntityDataManager.swift */,
+				6467BE5A21F669300007ECD0 /* PuppieImageHelper.swift */,
 				7EC36C1321DFB077006C261C /* Entry.swift */,
 				7EC36C1521DFCAF9006C261C /* EntryTableViewCell.swift */,
 			);
@@ -149,7 +148,6 @@
 			children = (
 				6414C6CE21E167A600BCA343 /* View */,
 				6414C6CF21E167F100BCA343 /* Services */,
-				6414C6D021E1685600BCA343 /* Model */,
 				7EC36C0A21DF9387006C261C /* MyPuppie */,
 				7EC36C0821DF9007006C261C /* PuppiesMainViewController.swift */,
 				7EC36C0521DF8E43006C261C /* Puppies.xcdatamodeld */,
@@ -235,7 +233,9 @@
 			files = (
 				7EC36C1621DFCAF9006C261C /* EntryTableViewCell.swift in Sources */,
 				7EC36C1421DFB077006C261C /* Entry.swift in Sources */,
+				6467BE5B21F669300007ECD0 /* PuppieImageHelper.swift in Sources */,
 				6414C6C221DD4F8F00BCA343 /* DetailListPuppiesCollectionViewCell.swift in Sources */,
+				6467BE5921F669230007ECD0 /* EntityDataManager.swift in Sources */,
 				6414C6CB21E0DC6E00BCA343 /* PuppiesAsyncImage.swift in Sources */,
 				7EC36C0721DF8E43006C261C /* Puppies.xcdatamodeld in Sources */,
 				D93AC78F21DCB9E700B9E817 /* ListPuppiesViewController.swift in Sources */,
@@ -395,9 +395,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RDV2KJUFH7;
+				DEVELOPMENT_TEAM = 8ML2E6F7P4;
 				INFOPLIST_FILE = puppies/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -414,9 +414,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RDV2KJUFH7;
+				DEVELOPMENT_TEAM = 8ML2E6F7P4;
 				INFOPLIST_FILE = puppies/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -17,22 +17,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Puppies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14D-yc-uVR">
-                                <rect key="frame" x="156.5" y="323" width="62" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVG-7e-z6t">
-                                <rect key="frame" x="245" y="490" width="72" height="30"/>
-                                <state key="normal" title="My puppie"/>
+                            <imageView userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="e5df6644d911ea7a61428a63ace2e975" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="89X-go-Kzn">
+                                <rect key="frame" x="0.0" y="58" width="375" height="609"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVG-7e-z6t">
+                                <rect key="frame" x="178" y="221" width="181" height="67"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" title="My puppie">
+                                    <color key="titleColor" red="0.52852863117644389" green="0.71075837692448518" blue="0.70247812760365802" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
                                 <connections>
                                     <segue destination="TvD-bm-m0E" kind="showDetail" id="BYQ-M2-8WO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z0O-h5-OVN">
-                                <rect key="frame" x="50" y="490" width="56" height="30"/>
-                                <state key="normal" title="Puppies"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z0O-h5-OVN">
+                                <rect key="frame" x="16" y="221" width="154" height="67"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" title="Puppies">
+                                    <color key="titleColor" red="0.52166562957775509" green="0.70152910231308618" blue="0.69335637292774466" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
                                 <connections>
                                     <segue destination="MuK-rK-srE" kind="show" id="HC8-wl-dGU"/>
                                 </connections>
@@ -40,12 +49,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="14D-yc-uVR" firstAttribute="centerY" secondItem="j7M-gJ-YbZ" secondAttribute="centerY" id="F9s-M1-qgl"/>
-                            <constraint firstItem="eqJ-ql-0YT" firstAttribute="bottom" secondItem="Z0O-h5-OVN" secondAttribute="bottom" constant="147" id="JMG-0d-Mj2"/>
-                            <constraint firstItem="14D-yc-uVR" firstAttribute="centerX" secondItem="j7M-gJ-YbZ" secondAttribute="centerX" id="UCM-aC-0KH"/>
-                            <constraint firstItem="eqJ-ql-0YT" firstAttribute="trailing" secondItem="aVG-7e-z6t" secondAttribute="trailing" constant="58" id="h7s-UM-ixL"/>
-                            <constraint firstItem="eqJ-ql-0YT" firstAttribute="bottom" secondItem="aVG-7e-z6t" secondAttribute="bottom" constant="147" id="mys-sS-Fr3"/>
-                            <constraint firstItem="Z0O-h5-OVN" firstAttribute="leading" secondItem="eqJ-ql-0YT" secondAttribute="leading" constant="50" id="slD-b5-OoZ"/>
+                            <constraint firstItem="89X-go-Kzn" firstAttribute="trailing" secondItem="eqJ-ql-0YT" secondAttribute="trailing" id="Dhk-3j-5TH"/>
+                            <constraint firstItem="89X-go-Kzn" firstAttribute="leading" secondItem="eqJ-ql-0YT" secondAttribute="leading" id="NYn-rF-Ush"/>
+                            <constraint firstItem="89X-go-Kzn" firstAttribute="bottom" secondItem="eqJ-ql-0YT" secondAttribute="bottom" id="vJd-kP-mAa"/>
+                            <constraint firstItem="89X-go-Kzn" firstAttribute="top" secondItem="j7M-gJ-YbZ" secondAttribute="top" constant="58" id="wFZ-3x-x3Q"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eqJ-ql-0YT"/>
                     </view>
@@ -57,7 +64,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrK-Nh-ASf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1078" y="387"/>
+            <point key="canvasLocation" x="-1079.2" y="386.35682158920542"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="ve4-u1-jNz">
@@ -286,7 +293,6 @@
         <!--Navigation Controller-->
         <scene sceneID="9bj-dy-HYj">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9eg-J9-qkV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TvD-bm-m0E" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oYn-ba-Eao">
@@ -298,6 +304,7 @@
                         <segue destination="Pil-ub-291" kind="relationship" relationship="rootViewController" id="mzp-cX-O10"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9eg-J9-qkV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2684" y="1173"/>
         </scene>
@@ -472,6 +479,7 @@
     </scenes>
     <resources>
         <image name="Image" width="256" height="256"/>
+        <image name="e5df6644d911ea7a61428a63ace2e975" width="500" height="752"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5SE-eG-dBN"/>
