@@ -12,7 +12,8 @@ class PuppiesMainViewController: UIViewController {
     
     @IBOutlet weak var myPuppieButton: UIButton!
     @IBOutlet weak var puppiesButton: UIButton!
-   
+    @IBOutlet weak var moodButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,6 +36,17 @@ class PuppiesMainViewController: UIViewController {
         },completion: { finished in
             UIButton.animate(withDuration: 0.3, animations: {
                 self.puppiesButton.layer.transform = CATransform3DMakeScale(1,1,1)
+            })
+        })
+        
+        moodButton.layer.cornerRadius = 12
+        moodButton.layer.borderWidth = 0
+        moodButton.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+        UIButton.animate(withDuration: 0.5, animations: {
+            self.moodButton.layer.transform = CATransform3DMakeScale(1.25,1.25,1)
+        },completion: { finished in
+            UIButton.animate(withDuration: 0.2, animations: {
+                self.moodButton.layer.transform = CATransform3DMakeScale(1,1,1)
             })
         })
     

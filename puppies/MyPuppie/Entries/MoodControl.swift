@@ -47,8 +47,8 @@ import UIKit
         moodButtons.removeAll()
         
         let bundle = Bundle(for: type(of: self))
-        let filledPaw = UIImage(named: "orange_paw", in: bundle, compatibleWith: self.traitCollection)
-        let emptyPaw = UIImage(named:"black_paw", in: bundle, compatibleWith: self.traitCollection)
+        let filledPaw = UIImage(named: "paw_light", in: bundle, compatibleWith: self.traitCollection)
+        let emptyPaw = UIImage(named:"paw_dark", in: bundle, compatibleWith: self.traitCollection)
         
         
         for _ in 0..<pawCount {
