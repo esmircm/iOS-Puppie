@@ -46,6 +46,14 @@
                                     <segue destination="MuK-rK-srE" kind="show" id="HC8-wl-dGU"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcH-bh-hIh">
+                                <rect key="frame" x="156" y="574" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="FQy-55-Ysa" kind="show" id="vsP-UB-Qli"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -325,7 +333,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZsG-gO-fbk">
-                                            <rect key="frame" x="9" y="8" width="130" height="130"/>
+                                            <rect key="frame" x="3" y="8" width="130" height="130"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
@@ -334,13 +342,13 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XCa-Ou-XiI">
-                                            <rect key="frame" x="150" y="69" width="202" height="21"/>
+                                            <rect key="frame" x="144" y="69" width="208" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="BNT-4S-oKn" customClass="MoodControl" customModule="puppies">
-                                            <rect key="frame" x="141" y="97" width="224" height="44"/>
+                                            <rect key="frame" x="135" y="97" width="230" height="44"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="editable" value="NO"/>
                                             </userDefinedRuntimeAttributes>
@@ -380,6 +388,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K6I-8g-LoU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1826.4000000000001" y="1172.5637181409297"/>
+        </scene>
+        <!--Charts View Controller-->
+        <scene sceneID="GNh-Y2-biE">
+            <objects>
+                <viewController id="FQy-55-Ysa" customClass="ChartsViewController" customModule="puppies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wwb-yb-VTp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="29u-AF-DhA" customClass="BasicBarChart" customModule="puppies" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="165" width="375" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="0dp-JC-G8o"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="29u-AF-DhA" secondAttribute="trailing" id="6Tb-s2-1F6"/>
+                            <constraint firstItem="29u-AF-DhA" firstAttribute="leading" secondItem="wwb-yb-VTp" secondAttribute="leading" id="8tB-so-rFt"/>
+                            <constraint firstItem="29u-AF-DhA" firstAttribute="centerY" secondItem="wwb-yb-VTp" secondAttribute="centerY" id="Lb5-Sx-p9d"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="asG-86-ciL"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="0Zp-j1-JkJ"/>
+                    <connections>
+                        <outlet property="basicBarChart" destination="29u-AF-DhA" id="43q-EJ-NHa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zef-yY-ybU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1033" y="1840"/>
         </scene>
         <!--Entry-->
         <scene sceneID="WcA-0L-CUf">

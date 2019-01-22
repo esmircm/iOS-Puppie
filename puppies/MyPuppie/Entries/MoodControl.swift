@@ -1,10 +1,3 @@
-//
-//  MoodControl.swift
-//  Dog
-//
-//  Created by Milan Kokic on 22/12/2018.
-//  Copyright © 2018 USJ. All rights reserved.
-//
 
 import UIKit
 

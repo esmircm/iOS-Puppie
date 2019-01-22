@@ -1,10 +1,3 @@
-//
-//  DailyEntryViewController.swift
-//  puppies
-//
-//  Created by Milan Kokic on 04/01/2019.
-//  Copyright © 2019 Endalia Sistemas. All rights reserved.
-//
 
 import UIKit
 import os.log
@@ -34,7 +27,7 @@ UINavigationControllerDelegate {
         if let entry = entry {
             entryId = entry.id
             navigationItem.title = entry.date
-           
+            
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = DateFormatter.Style.short
             
@@ -45,11 +38,11 @@ UINavigationControllerDelegate {
             }
             
             if let photoString = entry.photo {
-                 imageUrl = URL(string: entry.photo!)
+                imageUrl = URL(string: entry.photo!)
                 if photoString == "puppie_placeholder" {
                     photoImageView.image = UIImage(named: photoString)
                 } else {
-                    puppieImageHelper!.loadImage(imagePath: entry.photo!) {[weak self](image: UIImage) in
+                    puppieImageHelper!.loadImage(imagePath: entry.photo!, resize: false) {[weak self](image: UIImage) in
                         self?.photoImageView.image = image
                     }
                 }
@@ -114,7 +107,7 @@ UINavigationControllerDelegate {
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        
         let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         imageUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL
         photoImageView.image = image

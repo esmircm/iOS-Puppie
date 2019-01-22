@@ -1,15 +1,9 @@
-//
-//  EntriesViewController.swift
-//  puppies
-//
-//  Created by Milan Kokic on 04/01/2019.
-//  Copyright © 2019 Endalia Sistemas. All rights reserved.
-//
+
 import UIKit
 import CoreData
 
 class EntriesViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    var managedObjectContext: NSManagedObjectContext? = nil
+    var managedObjectContext: NSManagedObjectContext?
     var puppiesImageHelper: PuppieImageHelper?
     
     override func viewDidLoad() {
@@ -69,7 +63,7 @@ class EntriesViewController: UITableViewController, NSFetchedResultsControllerDe
         
         if photoString != "puppie_placeholder" {
             DispatchQueue.main.async { [weak self] in
-                self?.puppiesImageHelper?.loadImage(imagePath: photoString!, completion: {(image) in
+                self?.puppiesImageHelper?.loadImage(imagePath: photoString!, resize: true, completion: {(image) in
                     cell.photoImageView.image = image
                 })
             }
